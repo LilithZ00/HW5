@@ -36,8 +36,22 @@ router.post("/insert_person", (req, res) => {
     });
   });
 
+  router.get("/id/:id", async (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM HW_5_person where id_person = ?";
+    conn.query(sql, [id],  (err, result) => {
+      if (err) {
+        // Handle error
+        console.error(err);
+        res.status(500).json({ error: 'An error occurred while executing the query' });
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  });
+
   //delete
-router.delete("/:id", async (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
     const id = req.params.id;
     const sql = "delete from HW_5_person where id_person = ?";
     conn.query(sql,[id], (err, result) => {
